@@ -57,7 +57,7 @@
           <div class="paper-header">Menu</div>
           <div class="content fit"></div>
         </paper-header-panel>
-      <div main class="layout horizontal">
+      <div main class="layout horizontal" id="sv-request">
         <paper-header-panel mode="standard" class="sv-parameters blue">
         <div class="paper-header"><paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button> Street View Wizard</div>
         <div class="content fit configuration">
@@ -71,7 +71,7 @@
             <h4>Parameters</h4>
               <div class="form ">
                 <div class="layout horizontal">
-                  <paper-input label="width" always-float-label="true" type="number"></paper-input>
+                  <paper-input label="width" id="width" always-float-label="true" type="number"></paper-input>
                   <paper-input label="height" always-float-label="true" type="number"></paper-input>
                 </div>
               <div class="layout horizontal">
@@ -101,6 +101,9 @@
     </div>
     </paper-drawer-panel>
         <!-- build:js scripts/main.js -->
+          <script src="scripts/models/authenticationMode.js"></script>
+          <script src="scripts/models/streetViewRequest.js"></script>
+          <script src="scripts/views/streetViewRequestView.js"></script>
           <script src="scripts/main.js"></script>
         <!-- endbuild -->
 
