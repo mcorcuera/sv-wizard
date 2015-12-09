@@ -68,7 +68,9 @@
         padding-left: 5px;
         font-size: 12px;
       }
-
+      .sv-parameters {
+        min-width: 400px;
+      }
       .configuration .section paper-input {
         font-size: 10px;
         margin-right: 10px;
@@ -116,7 +118,7 @@
           <div class="content fit"></div>
         </paper-header-panel>
       <div main class="layout horizontal">
-        <paper-header-panel mode="standard" class="flex-3 blue">
+        <paper-header-panel mode="standard" class="sv-parameters blue">
         <div class="paper-header"><paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button> Street View Wizard</div>
         <div class="content fit configuration">
           <div class="section">
@@ -154,7 +156,7 @@
         </div>
       </paper-header-panel>
 
-      <div class="flex-7" id="map">
+      <div class="flex" id="map">
       </div>
     </div>
     </paper-drawer-panel>
