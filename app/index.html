@@ -17,82 +17,22 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" is="custom-style" href="styles/main.css">
     <!-- endbuild -->
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
     <!-- endbuild -->
-    <style is="custom-style">
-    * {
-      box-sizing: border-box;
-    }
-      paper-header-panel{
-        box-shadow: 0px 0px 4px grey;
-        z-index: 1;
-      }
-      paper-drawer-panel {
-        --paper-drawer-panel-left-drawer-container: {
-            z-index:2;
-        };
-        --paper-drawer-panel-scrim: {
-          z-index: 2;
-        };
-      }
-
-      .paper-header {
-        height: 60px;
-        font-size: 16px;
-        line-height: 60px;
-        padding: 0 10px;
-        color: white;
-        transition: height 0.2s;
-
-      }
-      .content {
-        height: 100%;
-        padding: 20px 15px;
-      }
-      .cover {
-        margin: 60px;
-      }
-      .blue .paper-header {
-        background-color: var(--paper-light-blue-700);
-      }
-
-      .configuration .section {
-        padding-top: 5px;
-        padding-left: 5px;
-
-      }
-      .configuration .section .form {
-        padding-left: 5px;
-        font-size: 12px;
-      }
-      .sv-parameters {
-        min-width: 400px;
-      }
-      .configuration .section paper-input {
-        font-size: 10px;
-        margin-right: 10px;
-        --type: number;
-        --paper-input-container-input: {
-          font-size: 12px;
-
-        };
-      }
-      .configuration .section h5 {
-        font-weight: normal;
-        font-size: 14px;
-        color: #444;
-      }
-    </style>
+    <!--
+    
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
+    <script src="/bower_components/underscore/underscore.js"></script>
+    <script src="/bower_components/backbone/backbone.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
-
+    <link rel="import" href="styles/custom-style.html">
     <link rel="import" href="/bower_components/paper-styles/paper-styles.html">
     <link rel="import" href="/bower_components/iron-flex-layout/classes/iron-flex-layout.html">
     <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
@@ -160,9 +100,6 @@
       </div>
     </div>
     </paper-drawer-panel>
-<!--
-
--->
         <!-- build:js scripts/main.js -->
           <script src="scripts/main.js"></script>
         <!-- endbuild -->
