@@ -14,11 +14,14 @@
 
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog.css" />
+    <link rel="stylesheet" href="/bower_components/ng-dialog/css/ngDialog-theme-default.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" is="custom-style" href="styles/main.css">
     <link rel="stylesheet" is="custom-style" href="styles/svPreview.css">
+    <link rel="stylesheet" href="styles/ngDialog-theme-flat.css" />
     <!-- endbuild -->
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
@@ -30,6 +33,8 @@
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/webcomponentsjs/webcomponents.js"></script>
     <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/web-animations-js/web-animations.min.js"></script>
+    <script src="/bower_components/ng-dialog/js/ngDialog.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <link rel="import" href="styles/custom-style.html">
@@ -42,6 +47,8 @@
     <link rel="import" href="/bower_components/paper-input/paper-input.html">
     <link rel="import" href="/bower_components/paper-radio-group/paper-radio-group.html">
     <link rel="import" href="/bower_components/paper-radio-button/paper-radio-button.html">
+    <link rel="import" href="/bower_components/paper-button/paper-button.html">
+    <link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
 
 
     <!-- build:js scripts/main.js -->
@@ -63,79 +70,85 @@
 
         <paper-header-panel mode="standard" class="sv-parameters blue">
           <div class="paper-header"><paper-icon-button icon="menu" class="dropdown-trigger"></paper-icon-button> Street View Wizard</div>
-          <div class="content fit configuration">
-            <div class="section">
-              <h4>Name</h4>
-              <div class="form">
-                <paper-input-container no-label-float="true" class="flex">
-                  <input is="iron-input" ng-model="request.name"></input>
-                </paper-input-container>
+          <div class="content fit layout vertical justified">
+            <div class="configuration">
+              <div class="section">
+                <h4>Name</h4>
+                <div class="form">
+                  <paper-input-container no-label-float="true" class="flex">
+                    <input is="iron-input" ng-model="request.name"></input>
+                  </paper-input-container>
+                </div>
+              </div>
+              <div class="section">
+                <h4>Parameters</h4>
+                  <div class="form ">
+                    <div class="layout horizontal">
+                      <paper-input-container always-float-label="true" >
+                        <label>width:</label>
+                        <input is="iron-input" type="number" ng-model="request.size.width">
+                         <div suffix>px</div>
+                      </paper-input-container>
+  
+                      <paper-input-container always-float-label="true" >
+                        <label>height:</label>
+                        <input is="iron-input" type="number" ng-model="request.size.height">
+                         <div suffix>px</div>
+                      </paper-input-container>
+                    </div>
+                  <div class="layout horizontal">
+                    <paper-input-container always-float-label="true" >
+                      <label>latitude:</label>
+                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lat">
+                    </paper-input-container>
+                    <paper-input-container always-float-label="true" >
+                      <label>longitude:</label>
+                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lng">
+                    </paper-input-container>
+                  </div>
+                    <div class="layout horizontal">
+                      <paper-input-container always-float-label="true" >
+                        <label>heading:</label>
+                        <input is="iron-input" type="number" min="0" max="360" 
+                          step="0.5" ng-model="request.heading">
+                      </paper-input-container>
+                    </div>
+                    <div class="layout horizontal">
+                      <paper-input-container always-float-label="true" >
+                        <label>pitch:</label>
+                        <input is="iron-input" type="number" min="-90" max="90" 
+                          step="0.5" ng-model="request.pitch">
+                      </paper-input-container>
+                    </div>
+                    <div class="layout horizontal">
+                      <paper-input-container always-float-label="true" >
+                        <label>fov:</label>
+                        <input is="iron-input" type="number" max="180" min="5.625" 
+                          step="0.5" ng-model="request.fov">
+                      </paper-input-container>
+                    </div>
+                  </div>
+              </div>
+              <div class="section">
+                <h4>Authentication</h4>
+                  <div class="form ">
+                    <paper-radio-group selected="small" class="layout vertical">
+                      <paper-radio-button name="small">None</paper-radio-button>
+                      <paper-radio-button name="medium">API key</paper-radio-button>
+                      <paper-radio-button name="large">Maps for Work</paper-radio-button>
+                    </paper-radio-group>
+                  </div>
               </div>
             </div>
-            <div class="section">
-              <h4>Parameters</h4>
-                <div class="form ">
-                  <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
-                      <label>width:</label>
-                      <input is="iron-input" type="number" ng-model="request.size.width">
-                    </paper-input-container>
-
-                    <paper-input-container always-float-label="true" >
-                      <label>height:</label>
-                      <input is="iron-input" type="number" ng-model="request.size.height">
-                    </paper-input-container>
-                  </div>
-                <div class="layout horizontal">
-                  <paper-input-container always-float-label="true" >
-                    <label>latitude:</label>
-                    <input is="iron-input" type="number" step="0.01" ng-model="request.location.lat">
-                  </paper-input-container>
-                  <paper-input-container always-float-label="true" >
-                    <label>longitude:</label>
-                    <input is="iron-input" type="number" step="0.01" ng-model="request.location.lng">
-                  </paper-input-container>
-                </div>
-                  <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
-                      <label>heading:</label>
-                      <input is="iron-input" type="number" min="0" max="360" 
-                        step="0.5" ng-model="request.heading">
-                    </paper-input-container>
-                  </div>
-                  <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
-                      <label>pitch:</label>
-                      <input is="iron-input" type="number" min="-90" max="90" 
-                        step="0.5" ng-model="request.pitch">
-                    </paper-input-container>
-                  </div>
-                  <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
-                      <label>fov:</label>
-                      <input is="iron-input" type="number" max="180" min="5.625" 
-                        step="0.5" ng-model="request.fov">
-                    </paper-input-container>
-                  </div>
-                </div>
+            
+            <!-- Action footer -->
+            <div class="layout horizontal justified">
+              <paper-button class="save" raised>Save</paper-button>
+              <paper-button class="generate" ng-click="generate()" raised>Generate</paper-button>
             </div>
-            <div class="section">
-              <h4>Authentication</h4>
-                <div class="form ">
-                  <paper-radio-group selected="small" class="layout vertical">
-                    <paper-radio-button name="small">None</paper-radio-button>
-                    <paper-radio-button name="medium">API key</paper-radio-button>
-                    <paper-radio-button name="large">Maps for Work</paper-radio-button>
-                  </paper-radio-group>
-                </div>
             </div>
-        </div>
+            
       </paper-header-panel>
-      <!-- StreetView Container -->
-      <!--
-      <div class="flex" id="map">
-      </div>
-      -->
       <sv-preview style="width:100%;height:100%" 
         location="request.location"
         fov="request.fov"
@@ -147,6 +160,7 @@
         <!-- build:js scripts/main.js -->
           <script src="scripts/main.js"></script>
             <script src="scripts/controllers/streetViewRequestCtrl.js"></script>
+            <script src="scripts/controllers/generatedDialogCtrl.js"></script>
             <script src="scripts/directives/svPreview.js"></script>
         <!-- endbuild -->
 

@@ -9,7 +9,6 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             });
         };
     }
-    
     function povListener_(scope, self) {
         return function() {
             var pov = self.panorama.getPov();
@@ -19,7 +18,6 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             });
         };
     }
-    
     function positionListener_(scope, self) {
         return function() {
             $timeout(function(){
@@ -29,12 +27,10 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             });
         };
     }
-    
     function resizePanorama_(scope, parent, panoramaEl, panorama) {
         var parentSize = getInnerSize(parent);
         var pRatio = parentSize.width / parentSize.height;
         var ratio = scope.ratio();
-        console.log(pRatio, scope.ratio());
         // The res
         if(pRatio > ratio) {
             panoramaEl.style.height = '100%';
@@ -45,8 +41,7 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
         }
         // The event has to be manually triggered because if not, the panorama
         // view doesn't notice the size changed
-        google.maps.event.trigger(panorama, 'resize')
-        console.log( parentSize);
+        google.maps.event.trigger(panorama, 'resize');
     }
 
 
@@ -91,10 +86,7 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
                 panoramaEl,
                 {
                   addressControl: false,
-                  zoomControl: false,
-                  position: {lat: 37.869260, lng: -122.254811},
-                  pov: {heading: 165, pitch: 0},
-                  zoom: 1
+                  zoomControl: false
                 }
             );
             
@@ -139,12 +131,10 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             resizePanorama_(scope, container, panoramaEl, this.panorama);
             
             scope.$watch('ratio()', function() {
-                console.log(scope.ratio());
                 resizePanorama_(scope, container, panoramaEl, self.panorama);
             });
             
             angular.element($window).bind('resize', function() {
-                console.log("Mierdo");
                 resizePanorama_(scope, container, panoramaEl, self.panorama);
             });
         }

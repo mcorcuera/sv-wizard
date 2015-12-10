@@ -1,9 +1,9 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.controller( 'StreetViewRequestCtrl', function($scope) {
+svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
 
   var currentRequest = {
-    name: 'Mikel',
+    name: '',
     location: {lat: 37.869260, lng: -122.254811},
     size: {
       width: 320,
@@ -23,5 +23,26 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope) {
       return width/height;
     }
   }
+  
+  $scope.generate = function() {
+    var r = $scope.request;
+    var baseUrl = 'https://maps.googleapis.com/maps/api/streetview?';
+    baseUrl += 'location=' + r.location.lat + ',' + r.location.lng;
+    baseUrl += '&heading=' + r.heading;
+    baseUrl += '&pitch=' + r.pitch;
+    baseUrl += '&fov=' + r.fov;
+    baseUrl += '&size=' + r.size.width + 'x' + r.size.height;
+    ngDialog.open({
+      template: 'templates/generated.html',
+      className: 'ngdialog-theme-default ngdialog-theme-custom',
+      controller: 'GeneratedDialogCtrl',
+      data: {
+        url: baseUrl
+      }
+    })
+    console.log(baseUrl);
+  }
+  
+  $scope.dialogOpen = false;
   $scope.request = currentRequest;
 });

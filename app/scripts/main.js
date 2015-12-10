@@ -1,5 +1,3 @@
 var svWizard = svWizard || {};
 
-
-
-var svWizardApp = angular.module('svWizardApp', []);
+var svWizardApp = angular.module('svWizardApp', ['ngDialog']);
