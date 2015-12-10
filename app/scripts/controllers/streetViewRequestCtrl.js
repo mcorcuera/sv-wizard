@@ -1,6 +1,7 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
+svWizardApp.controller( 'StreetViewRequestCtrl',
+  ['$scope', 'ngDialog', function($scope, ngDialog) {
 
   var currentRequest = {
     name: '',
@@ -16,14 +17,14 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
   $scope.getRatio = function() {
     var width = $scope.request.size.width;
     var height = $scope.request.size.height;
-    
+
     if( width == 0 || height == 0) {
       return 1;
     }else{
       return width/height;
     }
   }
-  
+
   $scope.generate = function() {
     var r = $scope.request;
     var baseUrl = 'https://maps.googleapis.com/maps/api/streetview?';
@@ -42,7 +43,7 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
     })
     console.log(baseUrl);
   }
-  
+
   $scope.dialogOpen = false;
   $scope.request = currentRequest;
-});
+}]);

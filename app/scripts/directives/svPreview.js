@@ -1,6 +1,7 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.directive( 'svPreview', function($timeout, $window) {
+svWizardApp.directive( 'svPreview',
+  ['$timeout', '$window',function($timeout, $window) {
 
     function zoomListener_(scope, panorama) {
         return function() {
@@ -137,4 +138,4 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             });
         }
     };
-});
+}]);

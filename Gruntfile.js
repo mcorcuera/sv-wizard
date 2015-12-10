@@ -337,6 +337,14 @@ module.exports = function (grunt) {
             '{,*/}*.html',
             'styles/fonts/{,*/}*.*'
           ]
+        }, {
+          expand: true,
+          dot: true,
+          dest: '<%= config.dist %>',
+          src: [
+            // Copy bower components to fix polymer dependencies
+            'bower_components/**/*.*'
+          ]
         }]
       }
     },
