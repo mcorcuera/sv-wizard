@@ -18,6 +18,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" is="custom-style" href="styles/main.css">
+    <link rel="stylesheet" is="custom-style" href="styles/svPreview.css">
     <!-- endbuild -->
     <!-- build:js scripts/vendor/modernizr.js -->
     <script src="/bower_components/modernizr/modernizr.js"></script>
@@ -139,7 +140,8 @@
         location="request.location"
         fov="request.fov"
         heading="request.heading" 
-        pitch="request.pitch"></sv-preview>
+        pitch="request.pitch"
+        ratio="getRatio()"></sv-preview>
     </div>
     </paper-drawer-panel>
         <!-- build:js scripts/main.js -->

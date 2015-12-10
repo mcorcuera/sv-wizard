@@ -1,6 +1,6 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.directive( 'svPreview', function($timeout) {
+svWizardApp.directive( 'svPreview', function($timeout, $window) {
     
     function zoomListener_(scope, self) {
         return function() {
@@ -30,6 +30,45 @@ svWizardApp.directive( 'svPreview', function($timeout) {
         };
     }
     
+    function resizePanorama_(scope, parent, panoramaEl, panorama) {
+        var parentSize = getInnerSize(parent);
+        var pRatio = parentSize.width / parentSize.height;
+        var ratio = scope.ratio();
+        console.log(pRatio, scope.ratio());
+        // The res
+        if(pRatio > ratio) {
+            panoramaEl.style.height = '100%';
+            panoramaEl.style.width = ratio/pRatio * 100 + "%";
+        }else{
+            panoramaEl.style.width = '100%';
+            panoramaEl.style.height = pRatio/ratio * 100 + "%";
+        }
+        // The event has to be manually triggered because if not, the panorama
+        // view doesn't notice the size changed
+        google.maps.event.trigger(panorama, 'resize')
+        console.log( parentSize);
+    }
+
+
+    function getInnerSize(el) {
+        var s = $window.getComputedStyle(el, null);
+        var tWidth = px2int(s.getPropertyValue('width'));
+        var tHeight = px2int(s.getPropertyValue('height'));
+        var pRigth = px2int(s.getPropertyValue('padding-right'));
+        var pLeft = px2int(s.getPropertyValue('padding-left'));
+        var pTop = px2int(s.getPropertyValue('padding-top'));
+        var pBottom = px2int(s.getPropertyValue('padding-bottom'));
+        
+        return {
+            width: tWidth - pRigth - pLeft,
+            height: tHeight - pTop - pBottom
+        };
+    }
+    //Externalize in utils
+    function px2int(px) {
+        return parseInt(px.replace('px', ''));
+    }
+    
     return {
         restrict: 'E',
         scope: {
@@ -37,12 +76,13 @@ svWizardApp.directive( 'svPreview', function($timeout) {
             heading: '=',
             pitch: '=',
             fov: '=',
-            ratio: '='
+            ratio: '&'
         },
         templateUrl: 'templates/svPreview.html',
         link: function(scope, element, attrs) {
             var self = this;
             var panoramaEl = element.find('#sv-preview-panorama')[0];
+            var container = element.find('.sv-preview-container')[0]
             var zoomListener = zoomListener_(scope, this);
             var povListener = povListener_(scope, this);
             var positionListener = positionListener_(scope, this);
@@ -96,6 +136,17 @@ svWizardApp.directive( 'svPreview', function($timeout) {
                     'zoom_changed', zoomListener);
             });
             
+            resizePanorama_(scope, container, panoramaEl, this.panorama);
+            
+            scope.$watch('ratio()', function() {
+                console.log(scope.ratio());
+                resizePanorama_(scope, container, panoramaEl, self.panorama);
+            });
+            
+            angular.element($window).bind('resize', function() {
+                console.log("Mierdo");
+                resizePanorama_(scope, container, panoramaEl, self.panorama);
+            });
         }
     };
 });
