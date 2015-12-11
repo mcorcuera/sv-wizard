@@ -6,7 +6,7 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
     name: '',
     location: {lat: 37.869260, lng: -122.254811},
     size: {
-      width: 320,
+      width: 640,
       height: 640
     },
     heading: 98.5,

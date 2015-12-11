@@ -1,11 +1,17 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.directive( 'svPreview', function($timeout, $window) {
+svWizardApp.directive( 'svPreview', function($timeout, $window, Utils) {
     
     function zoomListener_(scope, self) {
         return function() {
             $timeout(function(){
-                scope.fov = 180 / (Math.pow(2,self.panorama.getZoom()));
+                var fov = Utils.numbers.zoom2fov(self.panorama.getZoom());
+                //FOV cannot be > 120 for SV API
+                if( fov > 120) {
+                    self.panorama.setZoom(Utils.numbers.fov2zoom(120));
+                }else{
+                    scope.fov = Utils.numbers.decimalPlaces(fov,1);  
+                }
             });
         };
     }
@@ -13,8 +19,9 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
         return function() {
             var pov = self.panorama.getPov();
             $timeout(function(){
-                scope.heading = pov.heading;
-                scope.pitch = pov.pitch;
+                scope.heading = Utils.numbers.decimalPlaces(
+                    Utils.numbers.wrap(pov.heading, 360), 1);
+                scope.pitch =  Utils.numbers.decimalPlaces(pov.pitch, 1);
             });
         };
     }
@@ -22,8 +29,10 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
         return function() {
             $timeout(function(){
                 var position = self.panorama.getPosition();
-                scope.location.lat = position.lat();
-                scope.location.lng = position.lng();
+                scope.location.lat = Utils.numbers.decimalPlaces(
+                        position.lat(),5);
+                scope.location.lng = Utils.numbers.decimalPlaces(
+                    position.lng(), 5);
             });
         };
     }
@@ -117,12 +126,9 @@ svWizardApp.directive( 'svPreview', function($timeout, $window) {
             });
             
             scope.$watch( 'fov', function() {
-                //From the documentation: https://goo.gl/hCvvt
-                // fov = 180 / (2 ^ zoom)
-                // zoom = (log(180) - log(fov))/log(2)
                 google.maps.event.removeListener(zoomListenerId);
                 var fov = scope.fov;
-                var zoom = Math.log(180/fov) / Math.log(2);
+                var zoom = Utils.numbers.fov2zoom(fov);
                 self.panorama.setZoom(zoom);
                 zoomListenerId = google.maps.event.addListener(self.panorama, 
                     'zoom_changed', zoomListener);

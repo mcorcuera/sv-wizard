@@ -97,13 +97,13 @@
                       </paper-input-container>
                     </div>
                   <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
+                    <paper-input-container always-float-label="true">
                       <label>latitude:</label>
-                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lat">
+                      <input is="iron-input" type="number" step="0.01" disabled="true" ng-model="request.location.lat">
                     </paper-input-container>
                     <paper-input-container always-float-label="true" >
                       <label>longitude:</label>
-                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lng">
+                      <input is="iron-input" type="number" step="0.01" disabled="true" ng-model="request.location.lng">
                     </paper-input-container>
                   </div>
                     <div class="layout horizontal">
@@ -123,7 +123,7 @@
                     <div class="layout horizontal">
                       <paper-input-container always-float-label="true" >
                         <label>fov:</label>
-                        <input is="iron-input" type="number" max="180" min="5.625" 
+                        <input is="iron-input" type="number" max="120" min="5.625" 
                           step="0.5" ng-model="request.fov">
                       </paper-input-container>
                     </div>
@@ -159,6 +159,8 @@
     </paper-drawer-panel>
         <!-- build:js scripts/main.js -->
           <script src="scripts/main.js"></script>
+            <script src="scripts/utils.js"></script>
+            <script src="scripts/services/utils.js"></script>
             <script src="scripts/controllers/streetViewRequestCtrl.js"></script>
             <script src="scripts/controllers/generatedDialogCtrl.js"></script>
             <script src="scripts/directives/svPreview.js"></script>
