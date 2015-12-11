@@ -35,6 +35,7 @@
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/bower_components/web-animations-js/web-animations.min.js"></script>
     <script src="/bower_components/ng-dialog/js/ngDialog.js"></script>
+    <script src="/bower_components/ng-polymer-elements/ng-polymer-elements.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -94,13 +95,13 @@
                       </paper-input-container>
                     </div>
                   <div class="layout horizontal">
-                    <paper-input-container always-float-label="true" >
+                    <paper-input-container always-float-label="true">
                       <label>latitude:</label>
-                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lat">
+                      <input is="iron-input" type="number" step="0.01" disabled="true" ng-model="request.location.lat">
                     </paper-input-container>
                     <paper-input-container always-float-label="true" >
                       <label>longitude:</label>
-                      <input is="iron-input" type="number" step="0.01" ng-model="request.location.lng">
+                      <input is="iron-input" type="number" step="0.01" disabled="true" ng-model="request.location.lng">
                     </paper-input-container>
                   </div>
                     <div class="layout horizontal">
@@ -120,7 +121,7 @@
                     <div class="layout horizontal">
                       <paper-input-container always-float-label="true" >
                         <label>fov:</label>
-                        <input is="iron-input" type="number" max="180" min="5.625"
+                        <input is="iron-input" type="number" max="120" min="5.6"
                           step="0.5" ng-model="request.fov">
                       </paper-input-container>
                     </div>
@@ -129,10 +130,10 @@
               <div class="section">
                 <h4>Authentication</h4>
                   <div class="form ">
-                    <paper-radio-group selected="small" class="layout vertical">
-                      <paper-radio-button name="small">None</paper-radio-button>
-                      <paper-radio-button name="medium">API key</paper-radio-button>
-                      <paper-radio-button name="large">Maps for Work</paper-radio-button>
+                    <paper-radio-group ng-model="request.authenticationMode" class="layout vertical">
+                      <paper-radio-button name="{{AuthenticationMode.NONE}}">None</paper-radio-button>
+                      <paper-radio-button name="{{AuthenticationMode.API_KEY}}">API key</paper-radio-button>
+                      <paper-radio-button name="{{AuthenticationMode.FOR_WORK}}">Maps for Work</paper-radio-button>
                     </paper-radio-group>
                   </div>
               </div>
@@ -156,9 +157,17 @@
     </paper-drawer-panel>
         <!-- build:js scripts/main.js -->
           <script src="scripts/main.js"></script>
-            <script src="scripts/controllers/streetViewRequestCtrl.js"></script>
-            <script src="scripts/controllers/generatedDialogCtrl.js"></script>
-            <script src="scripts/directives/svPreview.js"></script>
+          <script src="scripts/utils.js"></script>
+          <script src="scripts/generator.js"></script>
+          <script src="scripts/models/authenticationMode.js"></script>
+          <script src="scripts/services/generator.js"></script>
+          <script src="scripts/services/utils.js"></script>
+          <script src="scripts/services/models.js"></script>
+          <script src="scripts/services/settings.js"></script>
+          <script src="scripts/controllers/streetViewRequestCtrl.js"></script>
+          <script src="scripts/controllers/generatedDialogCtrl.js"></script>
+          <script src="scripts/controllers/settingsCtrl.js"></script>
+          <script src="scripts/directives/svPreview.js"></script>
         <!-- endbuild -->
 
   </body>
