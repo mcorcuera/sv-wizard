@@ -1,6 +1,7 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
+svWizardApp.controller( 'StreetViewRequestCtrl', 
+  function($scope, ngDialog, M, Generator, Settings) {
 
   var currentRequest = {
     name: '',
@@ -11,8 +12,10 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
     },
     heading: 98.5,
     fov: 90,
-    pitch: 10
+    pitch: 10,
+    authenticationMode: M.AuthenticationMode.NONE
   };
+  
   $scope.getRatio = function() {
     var width = $scope.request.size.width;
     var height = $scope.request.size.height;
@@ -24,25 +27,19 @@ svWizardApp.controller( 'StreetViewRequestCtrl', function($scope, ngDialog) {
     }
   }
   
+  $scope.AuthenticationMode = M.AuthenticationMode;
+  
   $scope.generate = function() {
-    var r = $scope.request;
-    var baseUrl = 'https://maps.googleapis.com/maps/api/streetview?';
-    baseUrl += 'location=' + r.location.lat + ',' + r.location.lng;
-    baseUrl += '&heading=' + r.heading;
-    baseUrl += '&pitch=' + r.pitch;
-    baseUrl += '&fov=' + r.fov;
-    baseUrl += '&size=' + r.size.width + 'x' + r.size.height;
+    var url = Generator.generate($scope.request, Settings.getSettings());
     ngDialog.open({
       template: 'templates/generated.html',
       className: 'ngdialog-theme-default ngdialog-theme-custom',
       controller: 'GeneratedDialogCtrl',
       data: {
-        url: baseUrl
+        url: url
       }
-    })
-    console.log(baseUrl);
+    });
   }
   
-  $scope.dialogOpen = false;
   $scope.request = currentRequest;
 });
