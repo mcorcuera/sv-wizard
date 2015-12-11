@@ -1,7 +1,8 @@
 var svWizardApp = angular.module('svWizardApp');
 
 
-svWizardApp.directive( 'svPreview', function($timeout, $window, Utils) {
+svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
+  function($timeout, $window, Utils) {
 
     function zoomListener_(scope, panorama) {
         return function() {
@@ -9,7 +10,7 @@ svWizardApp.directive( 'svPreview', function($timeout, $window, Utils) {
                 var fov = Utils.numbers.zoom2fov(panorama.getZoom());
                 //FOV cannot be > 120 for SV API
                 if( fov > 120) {
-                    self.panorama.setZoom(Utils.numbers.fov2zoom(120));
+                    panorama.setZoom(Utils.numbers.fov2zoom(120));
                 }else{
                     scope.fov = Utils.numbers.decimalPlaces(fov,1);
                 }
@@ -29,7 +30,7 @@ svWizardApp.directive( 'svPreview', function($timeout, $window, Utils) {
     function positionListener_(scope, panorama) {
         return function() {
             $timeout(function(){
-                var position = self.panorama.getPosition();
+                var position = panorama.getPosition();
                 scope.location.lat = Utils.numbers.decimalPlaces(
                         position.lat(),5);
                 scope.location.lng = Utils.numbers.decimalPlaces(
@@ -128,8 +129,8 @@ svWizardApp.directive( 'svPreview', function($timeout, $window, Utils) {
                 google.maps.event.removeListener(zoomListenerId);
                 var fov = scope.fov;
                 var zoom = Utils.numbers.fov2zoom(fov);
-                self.panorama.setZoom(zoom);
-                zoomListenerId = google.maps.event.addListener(self.panorama,
+                panorama.setZoom(zoom);
+                zoomListenerId = google.maps.event.addListener(panorama,
                     'zoom_changed', zoomListener);
             });
 

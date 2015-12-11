@@ -1,8 +1,8 @@
 var svWizardApp = angular.module('svWizardApp');
 
 
-svWizardApp.controller( 'StreetViewRequestCtrl',
-  function($scope, ngDialog, M, Generator, Settings) {
+svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
+  'Generator', 'Settings', function($scope, ngDialog, M, Generator, Settings) {
   var currentRequest = {
     name: '',
     location: {lat: 37.869260, lng: -122.254811},
