@@ -4,15 +4,15 @@ var svWizardApp = angular.module('svWizardApp');
 svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
   'Generator', 'Settings', function($scope, ngDialog, M, Generator, Settings) {
   var currentRequest = {
-    name: '',
-    location: {lat: 37.869260, lng: -122.254811},
+    name: 'La Giralda',
+    location: {lat: 37.38629, lng: -5.99195},
     size: {
       width: 640,
       height: 640
     },
-    heading: 98.5,
-    fov: 90,
-    pitch: 10,
+    heading: 241.5,
+    fov: 57,
+    pitch: 27,
     authenticationMode: M.AuthenticationMode.NONE
   };
 
@@ -40,5 +40,6 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
       }
     });
   }
+  
   $scope.request = currentRequest;
 }]);
