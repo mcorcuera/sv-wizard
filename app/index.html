@@ -59,10 +59,8 @@
     <![endif]-->
     <paper-drawer-panel force-narrow="true" ng-app="svWizardApp">
       <!-- Settings menu -->
-      <paper-header-panel mode="standard" class="drawer blue" drawer
-        ng-include="'templates/menu.html'">
-
-      </paper-header-panel>
+      <div drawer ng-include="'templates/menu.html'">
+      </div>
       <!-- RequestView -->
       <div main class="layout horizontal" ng-include="'templates/main.html'"
         ng-controller="StreetViewRequestCtrl">
@@ -80,7 +78,7 @@
           <script src="scripts/services/settings.js"></script>
           <script src="scripts/controllers/streetViewRequestCtrl.js"></script>
           <script src="scripts/controllers/generatedDialogCtrl.js"></script>
-          <script src="scripts/controllers/settingsCtrl.js"></script>
+          <script src="scripts/controllers/menuCtrl.js"></script>
           <script src="scripts/directives/svPreview.js"></script>
         <!-- endbuild -->
 
