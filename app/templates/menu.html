@@ -1,7 +1,13 @@
-<paper-header-panel mode="standard" class="drawer blue" drawer>
-  <div class="paper-header" mode="standard" >Menu</div>
+<paper-header-panel mode="standard" class="drawer" drawer>
+  <paper-toolbar class="paper-header">
+    <paper-input placeholder="Filter requests" ng-model="search"
+      no-label-float="true">
+      <iron-icon suffix icon="search"></paper-icon-button>
+    </paper-input>
+  </paper-toolbar>
+
   <div class="content fit layout vertical menu">
-    <div class="menu-section">
+    <div class="menu-section" ng-if="!search || search.length == 0">
       <h4><iron-icon icon="settings"></iron-icon> Settings</h4>
       <div class="menu-section-content">
         <h5>Authentication</h5>
@@ -25,7 +31,7 @@
       <div class="menu-section-content">
         <h5 ng-if="requests.length == 0">No saved requests!</h5>
         <ul ng-if="requests.length > 0">
-          <li ng-repeat="request in requests | orderBy: 'timestamp':true"
+          <li ng-repeat="request in requests | filter: search | orderBy: 'timestamp':true"
             ng-click="openRequest(request)">
             {{request.name}}
           </li>

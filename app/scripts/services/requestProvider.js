@@ -25,7 +25,7 @@ svWizardApp.service('RequestProvider', ['localStorageService',
       }
       console.log(requests_);
       updateArray_();
-      
+
       var rawCurrent = localStorageService.get(CURRENT);
       if(angular.isDefined(rawCurrent) && rawCurrent !== null &&
         rawCurrent.length > 0) {
