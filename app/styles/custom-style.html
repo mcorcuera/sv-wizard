@@ -12,18 +12,19 @@ paper-drawer-panel {
 .blue .paper-header {
     background-color: var(--paper-light-blue-700);
 }
-.configuration paper-input-container {
-  font-size: 12px;
+paper-input-container {
   margin-right: 10px;
-  --paper-input-container-input: {
-    font-size: 12px;
-  };
 }
-.configuration .section paper-input {
-  font-size: 10px;
-  --paper-input-container-input: {
-    font-size: 12px;
+paper-input-container.small input {
+  font-size: 12px !important;
+}
+paper-input-container.small div[suffix] {
+  font-size: 12px !important;
+}
 
+paper-input {
+  --paper-input-container-input: {
+    
   };
 }
 

@@ -33,3 +33,26 @@ svWizard.utils.numbers = (function() {
 svWizard.utils.ui = {
     
 }
+
+svWizard.utils.signing = (function() {
+    var signing = {};
+    signing.signature = function(text, cryptoKey) {
+        var unescapedCryptoKey = signing.unescapeWebSafeBase64(cryptoKey);
+        console.log(unescapedCryptoKey);
+        var key = CryptoJS.enc.Base64.parse(unescapedCryptoKey);
+        var hash = CryptoJS.HmacSHA1(text, key);
+        var unescapedSignature = hash.toString(CryptoJS.enc.Base64);
+        console.log(unescapedSignature);
+        return signing.escapeWebSafeBase64(unescapedSignature);
+        
+    }
+    
+    signing.unescapeWebSafeBase64 = function(escaped) {
+        return escaped.replace(/-/g, '+').replace(/_/g, '/');
+    }
+    
+    signing.escapeWebSafeBase64 = function(unescaped) {
+        return unescaped.replace(/\+/g, '-').replace(/\//g, '_');
+    }
+    return signing;
+}());

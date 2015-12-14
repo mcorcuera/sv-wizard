@@ -21,7 +21,11 @@ svWizard.generator.generate = function(request, settings) {
     }else if(request.authenticationMode == svWizard.AuthenticationMode.API_KEY){
         return svWizard.DOMAIN + relativeUrl + '&key=' + settings.apiKey;
     }else{
-        return svWizard.DOMAIN + relativeUrl + '&client=' + settings.clientId;
+        var urlToSign = relativeUrl + '&client=' + settings.clientId;
+        console.log(urlToSign);
+        var signature = svWizard.utils.signing.signature(urlToSign, 
+            settings.cryptoKey);
+        return svWizard.DOMAIN + urlToSign + '&signature=' + signature;
     }
 };
 

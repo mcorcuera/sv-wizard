@@ -1,8 +1,10 @@
 var svWizardApp = angular.module('svWizardApp');
 
 
-svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
-  'Generator', 'Settings', function($scope, ngDialog, M, Generator, Settings) {
+svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
+  'ngDialog', 'M','Generator', 'Settings', 
+  function($scope, $rootScope, ngDialog, M, Generator, Settings) {
+    
   var currentRequest = {
     name: 'La Giralda',
     location: {lat: 37.38629, lng: -5.99195},
@@ -27,8 +29,6 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
     }
   }
 
-  $scope.AuthenticationMode = M.AuthenticationMode;
-
   $scope.generate = function() {
     var url = Generator.generate($scope.request, Settings.getSettings());
     ngDialog.open({
@@ -41,5 +41,10 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', 'ngDialog', 'M',
     });
   }
   
+  $scope.openMenu = function() {
+    $rootScope.$emit('openmenu');
+    console.log('Hallo');
+  }
+  $scope.AuthenticationMode = M.AuthenticationMode;
   $scope.request = currentRequest;
 }]);

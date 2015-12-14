@@ -18,7 +18,9 @@
     "angular": "~1.4.8",
     "paper-dialog": "PolymerElements/paper-dialog#~1.0.3",
     "ng-dialog": "likeastore/ngDialog#~0.5.6",
-    "ng-polymer-elements": "GabiAxel/ng-polymer-elements#~0.3.0"
+    "ng-polymer-elements": "GabiAxel/ng-polymer-elements#~0.3.0",
+    "angular-local-storage": "~0.2.3",
+    "cryptojslib": "sytelus/CryptoJS#~3.1.2"
   },
   "devDependencies": {
     "chai": "~3.4.2",

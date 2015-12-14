@@ -1,12 +1,30 @@
 <paper-header-panel mode="standard" class="drawer blue" drawer>
   <div class="paper-header" mode="standard" >Menu</div>
-  <div class="content fit layout vertical">
+  <div class="content fit layout vertical menu">
     <div class="menu-section">
       <h4><iron-icon icon="settings"></iron-icon> Settings</h4>
       <div class="menu-section-content">
-        <paper-input label="API Key"></paper-input>
-        <paper-input label="Client id"></paper-input>
-        <paper-input label="Crypto key"></paper-input>
+        
+        <h5>Authentication</h5>
+        <paper-input-container always-float-label="true" class="small">
+          <label>API key:</label>
+          <input is="iron-input" ng-model="auth.apiKey">
+        </paper-input-container>
+        <paper-input-container always-float-label="true" class="small">
+          <label>Client id:</label>
+          <input is="iron-input" ng-model="auth.clientId">
+        </paper-input-container>
+        <paper-input-container always-float-label="true" class="small">
+          <label>Crypto key:</label>
+          <input is="iron-input" ng-model="auth.cryptoKey">
+        </paper-input-container>
+      </div>
+    </div>
+    
+    <div class="menu-section">
+      <h4><iron-icon icon="folder"></iron-icon> Saved</h4>
+      <div class="menu-section-content">
+        <h5>No saved requests!</h5>
       </div>
     </div>
   </div>
