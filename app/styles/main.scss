@@ -83,3 +83,14 @@ paper-header-panel{
     }
   }
 }
+
+paper-toolbar {
+
+  paper-fab.floating {
+    position: absolute;
+    top: calc(64px - 28px);
+    right: 24px;
+    z-index: 1;
+    transition: top 0.18s ease-in;
+  }
+}

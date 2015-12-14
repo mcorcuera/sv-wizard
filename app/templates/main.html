@@ -1,5 +1,9 @@
-<paper-header-panel mode="standard" class="sv-parameters blue">
-  <div class="paper-header"><paper-icon-button icon="menu" class="dropdown-trigger" ng-click="openMenu()"></paper-icon-button> Street View Wizard</div>
+<paper-header-panel mode="standard" class="sv-parameters">
+    <paper-toolbar>
+  <paper-icon-button icon="menu" class="paper-header" ng-click="openMenu()"></paper-icon-button>
+  <div class="title">Street View Wizard</div>
+  <paper-fab id="create_button" icon="add" class="floating" ng-click="new()"></paper-fab>
+</paper-toolbar>
   <div class="content fit layout vertical justified">
     <div class="configuration">
       <div class="section">
@@ -12,7 +16,7 @@
       </div>
       <div class="section">
         <h4>Parameters</h4>
-          <div class="form ">
+          <div class="form">
             <div class="layout horizontal">
               <paper-input-container always-float-label="true" class="small">
                 <label>width:</label>
@@ -73,7 +77,7 @@
 
     <!-- Action footer -->
     <div class="layout horizontal justified">
-      <paper-button class="save" raised>Save</paper-button>
+      <paper-button class="save" raised ng-click="save()">Save</paper-button>
       <paper-button class="generate" ng-click="generate()" raised>Generate</paper-button>
     </div>
     </div>

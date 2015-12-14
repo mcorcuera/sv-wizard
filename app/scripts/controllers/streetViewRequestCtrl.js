@@ -2,22 +2,24 @@ var svWizardApp = angular.module('svWizardApp');
 
 
 svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
-  'ngDialog', 'M','Generator', 'Settings', 
-  function($scope, $rootScope, ngDialog, M, Generator, Settings) {
+  'ngDialog', 'M','Generator', 'Settings', 'RequestProvider', 
+  function($scope, $rootScope, ngDialog, M, Generator, Settings, 
+  RequestProvider) {
     
-  var currentRequest = {
-    name: 'La Giralda',
-    location: {lat: 37.38629, lng: -5.99195},
+  var defaultRequest = {
+    timestamp: null,
+    name: 'La Giralda - Sevilla',
+    location: {lat: 37.3863, lng: -5.99205},
     size: {
       width: 640,
       height: 640
     },
-    heading: 241.5,
-    fov: 57,
-    pitch: 27,
+    heading: 254.5,
+    fov: 71.6,
+    pitch: 30.8,
     authenticationMode: M.AuthenticationMode.NONE
   };
-
+  var currentRequest = RequestProvider.getCurrentRequest();
   $scope.getRatio = function() {
     var width = $scope.request.size.width;
     var height = $scope.request.size.height;
@@ -27,6 +29,15 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
     }else{
       return width/height;
     }
+  }
+  
+  $scope.$watch( 'request', function() {
+    RequestProvider.updateCurrentRequest($scope.request);
+  }, true);
+  
+  $scope.save = function() {
+    console.log('Prepare to save');
+    $scope.request = RequestProvider.saveRequest($scope.request);
   }
 
   $scope.generate = function() {
@@ -45,6 +56,12 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
     $rootScope.$emit('openmenu');
     console.log('Hallo');
   }
+  
+  $scope.new = function() {
+    $scope.request = angular.copy(defaultRequest);
+  }
+  
   $scope.AuthenticationMode = M.AuthenticationMode;
-  $scope.request = currentRequest;
+  $scope.request = currentRequest !== null ? currentRequest : 
+    angular.copy(defaultRequest);
 }]);

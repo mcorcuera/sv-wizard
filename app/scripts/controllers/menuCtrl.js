@@ -1,9 +1,17 @@
 var svWizardApp = angular.module('svWizardApp');
 
-svWizardApp.controller( 'MenuCtrl', ['$scope', '$rootScope', 'Settings',
-  function($scope, $rootScope, Settings) {
+svWizardApp.controller( 'MenuCtrl', ['$scope', '$rootScope', 'Settings', 
+  'RequestProvider', function($scope, $rootScope, Settings, RequestProvider) {
   
   $scope.auth = Settings.getSettings();
+  $scope.requests = RequestProvider.getRequests();
+  
+  $scope.$watch( function() {
+    return RequestProvider.getRequests()
+  }, function() {
+    
+    $scope.requests = RequestProvider.getRequests();
+  })
   
   $scope.$watch('auth.apiKey', function() {
     Settings.setApiKey($scope.auth.apiKey);

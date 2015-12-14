@@ -24,7 +24,12 @@
     <div class="menu-section">
       <h4><iron-icon icon="folder"></iron-icon> Saved</h4>
       <div class="menu-section-content">
-        <h5>No saved requests!</h5>
+        <h5 ng-if="requests.length == 0">No saved requests!</h5>
+        <ul ng-if="requests.length > 0">
+          <li ng-repeat="request in requests | orderBy: 'timestamp':true">
+            {{request.name}}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
