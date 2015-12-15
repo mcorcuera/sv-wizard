@@ -39,10 +39,9 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
         };
     }
     function resizePanorama_(scope, parent, panoramaEl, panorama) {
-        var parentSize = getInnerSize(parent);
+        var parentSize = Utils.ui.getInnerSize(parent, $window);
         var pRatio = parentSize.width / parentSize.height;
         var ratio = scope.ratio();
-        // The res
         if(pRatio > ratio) {
             panoramaEl.style.height = '100%';
             panoramaEl.style.width = ratio/pRatio * 100 + "%";
@@ -55,39 +54,21 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
         google.maps.event.trigger(panorama, 'resize');
     }
 
-
-    function getInnerSize(el) {
-        var s = $window.getComputedStyle(el, null);
-        var tWidth = px2int(s.getPropertyValue('width'));
-        var tHeight = px2int(s.getPropertyValue('height'));
-        var pRigth = px2int(s.getPropertyValue('padding-right'));
-        var pLeft = px2int(s.getPropertyValue('padding-left'));
-        var pTop = px2int(s.getPropertyValue('padding-top'));
-        var pBottom = px2int(s.getPropertyValue('padding-bottom'));
-
-        return {
-            width: tWidth - pRigth - pLeft,
-            height: tHeight - pTop - pBottom
-        };
-    }
-    //Externalize in utils
-    function px2int(px) {
-        return parseInt(px.replace('px', ''));
-    }
-
     return {
         restrict: 'E',
         scope: {
+            panorama: '=',
             location: '=',
             heading: '=',
             pitch: '=',
             fov: '=',
             ratio: '&'
         },
-        templateUrl: 'templates/svPreview.html',
+        template: '<div style="width:50%;height:50%" id="sv-preview-panorama"' + 
+            ' class=""></div>',
         link: function(scope, element, attrs) {
-            var panoramaEl = element.find('#sv-preview-panorama')[0];
-            var container = element.find('.sv-preview-container')[0];
+            var panoramaEl = element[0];
+            var container = element.parent()[0];
             var panorama = new google.maps.StreetViewPanorama(
                 panoramaEl,
                 {
@@ -95,6 +76,7 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
                   zoomControl: false
                 }
             );
+            scope.panorama = panorama;
             var zoomListener = zoomListener_(scope, panorama);
             var povListener = povListener_(scope, panorama);
             var positionListener = positionListener_(scope, panorama);

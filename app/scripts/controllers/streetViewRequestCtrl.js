@@ -23,8 +23,19 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
 
   $scope.$watch( 'request', function() {
     RequestProvider.updateCurrentRequest($scope.request);
-  }, true)
-
+  }, true);
+  
+  $scope.addressSelected = function(address){
+    console.log(address);
+    if( address !== undefined && address !== null) {
+      console.log('Halloo');
+      var location = address.geometry.location;
+      $scope.request.location.lat = location.lat();
+      $scope.request.location.lng = location.lng();
+      
+    }
+    
+  }
   $rootScope.$on('openrequest', function(event, request) {
     $scope.request = request;
   });
@@ -67,7 +78,6 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
     $scope.request.timestamp = null;
     $scope.request.name = '';
   }
-
   $scope.AuthenticationMode = M.AuthenticationMode;
   $scope.request = currentRequest !== null ? currentRequest :
     angular.copy(defaultRequest);

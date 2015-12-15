@@ -30,9 +30,28 @@ svWizard.utils.numbers = (function() {
     return numbers;
 })();
 
-svWizard.utils.ui = {
-    
-}
+svWizard.utils.ui = (function() {
+    var ui = {};
+    ui.getInnerSize = function(el, theWindow) {
+        var s = theWindow.getComputedStyle(el, null);
+        var tWidth = ui.px2int(s.getPropertyValue('width'));
+        var tHeight = ui.px2int(s.getPropertyValue('height'));
+        var pRigth = ui.px2int(s.getPropertyValue('padding-right'));
+        var pLeft = ui.px2int(s.getPropertyValue('padding-left'));
+        var pTop = ui.px2int(s.getPropertyValue('padding-top'));
+        var pBottom = ui.px2int(s.getPropertyValue('padding-bottom'));
+
+        return {
+            width: tWidth - pRigth - pLeft,
+            height: tHeight - pTop - pBottom
+        };
+    }
+    //Externalize in utils
+    ui.px2int = function(px) {
+        return parseInt(px.replace('px', ''));
+    }
+    return ui; 
+})();
 
 svWizard.utils.signing = (function() {
     var signing = {};

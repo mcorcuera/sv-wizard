@@ -82,10 +82,16 @@
     </div>
     </div>
 
-</paper-header-panel>
-<sv-preview style="width:100%;height:100%"
-location="request.location"
-fov="request.fov"
-heading="request.heading"
-pitch="request.pitch"
-ratio="getRatio()"></sv-preview>
+ </paper-header-panel>
+ 
+  <div class="sv-preview-container layout horizontal vertical center center-justified" style="width:100%;height:100%">
+   <sv-preview style="width:100%;height:100%" class="sv-preview-panorama"
+    panorama="panorama"
+    location="request.location"
+    fov="request.fov"
+    heading="request.heading"
+    pitch="request.pitch"
+    ratio="getRatio()"></sv-preview>
+    <map-preview class="map-preview" panorama="panorama"></map-preview>
+      <input placeholder="Search" class="address-search" autocomplete="addressSelected(address)"></input>
+  </div>
