@@ -2,8 +2,9 @@ var svWizardApp = angular.module('svWizardApp');
 
 svWizardApp.controller( 'MenuCtrl', ['$scope', '$rootScope', 'Settings',
   'RequestProvider', function($scope, $rootScope, Settings, RequestProvider) {
-
+  
   $scope.auth = Settings.getSettings();
+  console.log($scope.auth);
   $scope.requests = RequestProvider.getRequests();
 
   $scope.$watch( function() {

@@ -16,20 +16,17 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     /*Loads the requests from locastorage*/
     function init_() {
       var rawRequests = localStorageService.get(REQUESTS);
-      console.log(rawRequests);
       if(angular.isDefined(rawRequests) && rawRequests !== null
         && rawRequests.length > 0) {
         requests_ = angular.fromJson(rawRequests);
       }else{
         requests_ = {};
       }
-      console.log(requests_);
       updateArray_();
 
       var rawCurrent = localStorageService.get(CURRENT);
       if(angular.isDefined(rawCurrent) && rawCurrent !== null &&
         rawCurrent.length > 0) {
-        console.log(rawCurrent);
         current_ = angular.fromJson(rawCurrent);
       }else{
         current_ = {};
@@ -41,6 +38,7 @@ svWizardApp.service('RequestProvider', ['localStorageService',
       for(var key in requests_) {
         requestsArray_.push(requests_[key]);
       }
+      console.log(requestsArray_);
     }
 
     function saveRequests_() {
@@ -49,13 +47,14 @@ svWizardApp.service('RequestProvider', ['localStorageService',
 
     }
     this.saveRequest = function(request) {
-      console.log('Save');
+      console.log(requests_);
       var timestamp = request.timestamp;
-      if( request.timestamp === null) {
-        request.timestamp = Date.now() + '';
+      if( request.timestamp !== null) {
+        delete requests_[request.timestamp];
       }
-      console.log(request.timestamp);
+      request.timestamp = Date.now() + '';
       requests_[request.timestamp] = request;
+      console.log(requests_);
       saveRequests_();
       updateArray_();
       return request;
@@ -71,7 +70,6 @@ svWizardApp.service('RequestProvider', ['localStorageService',
         angular.isUndefined(current_.heading) ||
         angular.isUndefined(current_.fov) ||
         angular.isUndefined(current_.pitch)) {
-          console.log('Undefined');
           return null;
         }
       return current_;
@@ -85,7 +83,6 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     }
 
     this.updateCurrentRequest = function(request) {
-      console.log('Updating');
       current_ = request;
       var currentJson = angular.toJson(current_);
       localStorageService.set(CURRENT, currentJson);

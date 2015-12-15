@@ -63,7 +63,9 @@ svWizardApp.controller( 'StreetViewRequestCtrl', ['$scope', '$rootScope',
   }
 
   $scope.new = function() {
-    $scope.request = angular.copy(defaultRequest);
+    $scope.request = angular.copy($scope.request);
+    $scope.request.timestamp = null;
+    $scope.request.name = '';
   }
 
   $scope.AuthenticationMode = M.AuthenticationMode;

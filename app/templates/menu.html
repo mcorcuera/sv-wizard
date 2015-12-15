@@ -1,13 +1,14 @@
 <paper-header-panel mode="standard" class="drawer" drawer>
   <paper-toolbar class="paper-header">
-    <paper-input placeholder="Filter requests" ng-model="search"
+    <paper-input-container placeholder="Filter requests" 
       no-label-float="true">
+      <input is="iron-input" type="text" placeholder="Filter requests" ng-model="search"/>
       <iron-icon suffix icon="search"></paper-icon-button>
     </paper-input>
   </paper-toolbar>
 
   <div class="content fit layout vertical menu">
-    <div class="menu-section" ng-if="!search || search.length == 0">
+    <div class="menu-section" ng-show="!search || search.length == 0">
       <h4><iron-icon icon="settings"></iron-icon> Settings</h4>
       <div class="menu-section-content">
         <h5>Authentication</h5>
