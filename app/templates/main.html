@@ -1,29 +1,32 @@
 <paper-header-panel mode="standard" class="sv-parameters">
-  <paper-toolbar>
+  
+  <paper-toolbar class="medium-tall main">
     <paper-icon-button icon="menu" class="paper-header" 
       ng-click="main.menu.open()">
     </paper-icon-button>
-    <div class="title">Street View Wizard</div>
-    <paper-fab id="create_button" icon="add" class="floating" 
-      ng-click="main.new()">
-    </paper-fab>
+    <div class="title">
+      {{main.state.current.name || "New request"}}
+    </div>
+    <!-- Actions -->
+    <div class="middle">
+      
+      <paper-button ng-click="main.new()">
+        <iron-icon icon="note-add"></iron-icon> New
+      </paper-button>
+      
+      <paper-button ng-click="main.save()">
+        <iron-icon icon="save"></iron-icon> Save...
+      </paper-button>
+      <paper-button ng-click="main.generate()">
+        <iron-icon icon="code"></iron-icon>  Generate
+      </paper-button>
+    </div>
+    
   </paper-toolbar>
   
   <div class="content layout vertical justified">
     <!-- Request porperties sections-->
     <div class="configuration">
-      <!--Request name section -->
-      <div class="section">
-        <h4>Name</h4>
-        <div class="form">
-          <paper-input-container no-label-float="true" class="flex">
-            <input is="iron-input" placeholder="Unnamed"
-              ng-model="main.state.current.name">
-            </input>
-          </paper-input-container>
-        </div>
-      </div>
-      
       <!--Request location section -->
       <div class="section">
         <h4>Location</h4>
@@ -122,16 +125,6 @@
       </div>
     </div>
     <!--End of form-->
-    
-    <!-- Action footer -->
-    <div class="layout horizontal justified">
-      <paper-button class="save" raised ng-click="main.save()">
-        Save
-      </paper-button>
-      <paper-button class="generate" ng-click="main.generate()" raised>
-        Generate
-      </paper-button>
-    </div>
   </div>
 </paper-header-panel>
  

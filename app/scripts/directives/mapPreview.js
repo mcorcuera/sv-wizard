@@ -1,12 +1,12 @@
 var svWizardApp = angular.module('svWizardApp');
 
-
 svWizardApp.directive( 'mapPreview', ['$timeout', '$window', 'Utils',
   function($timeout, $window, Utils) {
     function initMap_(element) {
       return new google.maps.Map(element.find('div')[0], {
           zoom: 16,
-          zoomControl: false,
+          zoomControl: true,
+          scrollwheel: false,
           mapTypeControl: false,
           streetViewControl: true
         });

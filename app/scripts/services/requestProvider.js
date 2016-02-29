@@ -12,15 +12,57 @@ svWizardApp.service('RequestProvider', ['localStorageService',
 
     init_();
 
-    this.saveRequest = function(request) {
-      console.log(requests_);
-      if( request.timestamp !== null) {
-        delete requests_[request.timestamp];
+    this.createRequest = function(request) {
+      if(request.name === undefined || request.name === null || 
+        request.name.length === 0) {
+          throw 'Request must have a name';
       }
+      
+      if(this.getRequestWithName(request.name) !== null) {
+        throw 'Name should be unique';
+      }
+      var id = Math.random().toString(36).substr(2, 9)
+      request.id = id;
       request.timestamp = Date.now() + '';
-      requests_[request.timestamp] = request;
+      requests_[id] = request;
       saveRequests_();
       updateArray_();
+      return request;
+    };
+    
+    this.updateRequest = function(id, newReq) {
+      if(newReq.name === undefined || newReq.name === null || 
+        newReq.name.length === 0) {
+          throw 'Request must have a name';
+      }
+      var oldReq = requests_[id];
+      
+      if(oldReq === undefined || oldReq === null) {
+        throw 'Request does not exist';
+      }
+      newReq.id = id;
+      newReq.timestamp = Date.now() + '';
+      requests_[id] = newReq;
+      
+      saveRequests_();
+      updateArray_();
+      
+      return newReq;
+    };
+    
+    this.getRequestWithName = function(name) {
+      var request = null;
+      if(name !== null && name !== undefined && name != '') {
+        for(var id in requests_) {
+          if(requests_.hasOwnProperty(id)) {
+            if(requests_[id].name === name) {
+              request = requests_[id];
+              break;
+            }
+          }
+        }  
+      }
+      
       return request;
     }
     
@@ -29,12 +71,14 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     });
     
 
-    this.removeRequest = function(timestamp) {
-      delete requests_[timestamp];
+    this.removeRequest = function(id) {
+      delete requests_[id];
       saveRequests_();
       updateArray_();
       return true;
     }
+    
+    
     
     //Private
    

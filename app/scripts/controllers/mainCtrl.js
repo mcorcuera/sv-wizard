@@ -12,7 +12,6 @@ svWizard.controllers.Main = function(scope, State, Settings, RequestProvider,
   this.dialog = ngDialog;
   
   var self = this;
-  //Not happy with this
   
   scope.$watch( function() {
     return self.state.current;
@@ -58,15 +57,33 @@ svWizard.controllers.Main.prototype.onRequestChange = function(){
 }
 
 svWizard.controllers.Main.prototype.save = function() {
-  this.state.current = this.requestProvider.saveRequest(this.state.current);
+  this.dialog.open({
+    template: 'templates/save.html',
+    className: 'ngdialog-theme-default ngdialog-theme-custom',
+    controller: 'SaveCtrl',
+    controllerAs: 'save',
+    data: {
+      request: this.state.current
+    }
+  });
+  //this.state.current = this.requestProvider.saveRequest(this.state.current);
 }
 
 svWizard.controllers.Main.prototype.new = function() {
-  console.log('New');
-  this.state.current = angular.copy(this.state.current);
-  this.state.current.timestamp = null;
-  this.state.current.name  = '';
-  console.log(this.state.current);
+  var self = this;
+  this.dialog.openConfirm({
+    template: 'templates/confirm.html',
+    className: 'ngdialog-theme-default ngdialog-theme-custom',
+    controller: 'ConfirmCtrl',
+    controllerAs: 'dialog',
+    data: {
+      message: 'Do you really want to create a new requests? All unsaved ' +
+        'changes will be discarded.'
+    }
+  }).then(function() {
+    self.state.current.id = null;
+    self.state.current.name  = '';
+  });
 };
 
 angular.module('svWizardApp').controller( 'MainCtrl', ['$scope', 'State', 
