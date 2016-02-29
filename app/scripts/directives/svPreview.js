@@ -30,11 +30,13 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
     function positionListener_(scope, panorama) {
         return function() {
             $timeout(function(){
+                
                 var position = panorama.getPosition();
                 scope.location.lat = Utils.numbers.decimalPlaces(
                         position.lat(),5);
                 scope.location.lng = Utils.numbers.decimalPlaces(
                     position.lng(), 5);
+                    
             });
         };
     }
@@ -67,6 +69,8 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
         template: '<div style="width:50%;height:50%" id="sv-preview-panorama"' + 
             ' class=""></div>',
         link: function(scope, element, attrs) {
+            // Enable IV
+            window['google']['maps']['streetViewViewer'] = 'photosphere';
             var panoramaEl = element[0];
             var container = element.parent()[0];
             var panorama = new google.maps.StreetViewPanorama(
@@ -80,22 +84,27 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
             var zoomListener = zoomListener_(scope, panorama);
             var povListener = povListener_(scope, panorama);
             var positionListener = positionListener_(scope, panorama);
-
+            
             var zoomListenerId = google.maps.event.addListener(panorama,
                 'zoom_changed', zoomListener);
             var povListenerId = google.maps.event.addListener(panorama,
                 'pov_changed', povListener);
             var positionListenerId = google.maps.event.addListener(panorama,
                 'position_changed', positionListener);
-
+            
             /* Listen for changes on the parameters */
+            
             scope.$watch( 'location', function() {
+                
                 google.maps.event.removeListener(positionListenerId);
+                
                 var latLng = new google.maps.LatLng(scope.location);
                 panorama.setPosition(latLng);
                 positionListenerId = google.maps.event.addListener(panorama,
                     'position_changed', positionListener);
+                    
              }, true);
+             
 
             scope.$watchGroup(['heading', 'pitch'], function(){
                 google.maps.event.removeListener(povListenerId);
@@ -115,13 +124,13 @@ svWizardApp.directive( 'svPreview', ['$timeout', '$window', 'Utils',
                 zoomListenerId = google.maps.event.addListener(panorama,
                     'zoom_changed', zoomListener);
             });
-
+            
             resizePanorama_(scope, container, panoramaEl, panorama);
-
+            
             scope.$watch('ratio()', function() {
                 resizePanorama_(scope, container, panoramaEl, panorama);
             });
-
+            
             angular.element($window).bind('resize', function() {
                 resizePanorama_(scope, container, panoramaEl, panorama);
             });

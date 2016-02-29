@@ -1,34 +1,21 @@
-var svWizardApp = angular.module('svWizardApp');
+var svWizard = svWizard || {};
+svWizard.controllers = svWizard.controllers || {};
 
-svWizardApp.controller( 'MenuCtrl', ['$scope', '$rootScope', 'Settings',
-  'RequestProvider', function($scope, $rootScope, Settings, RequestProvider) {
+svWizard.controllers.MenuController = function(Settings, RequestProvider, 
+  State, Menu) {
   
-  $scope.auth = Settings.getSettings();
-  console.log($scope.auth);
-  $scope.requests = RequestProvider.getRequests();
+  this.provider = RequestProvider;
+  this.settings = Settings;
+  this.state = State;
+  this.menu = Menu;
+};
 
-  $scope.$watch( function() {
-    return RequestProvider.getRequests()
-  }, function() {
-    $scope.requests = RequestProvider.getRequests();
-  })
+svWizard.controllers.MenuController.prototype.openRequest = function(request) {
+  console.log('Hallo')
+  this.state.current = request;
+  this.menu.close();
+};
 
-  $scope.$watch('auth.apiKey', function() {
-    Settings.setApiKey($scope.auth.apiKey);
-  });
-
-  $scope.$watch('auth.clientId', function() {
-    Settings.setClientId($scope.auth.clientId);
-  });
-
-  $scope.$watch('auth.cryptoKey', function() {
-    Settings.setCryptoKey($scope.auth.cryptoKey);
-  });
-
-  $scope.openRequest = function(request) {
-    console.log('Opening');
-    $rootScope.$emit('openrequest', request);
-    $rootScope.$emit('closemenu');
-  }
-
-}]);
+angular.module('svWizardApp').controller( 'MenuCtrl', ['Settings',
+'RequestProvider', 'State', 'Menu', svWizard.controllers.MenuController]);
+  
