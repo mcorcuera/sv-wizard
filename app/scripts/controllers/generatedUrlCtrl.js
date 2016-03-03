@@ -7,10 +7,6 @@ svWizard.controllers.GeneratedUrl = function($scope, $window) {
   this.url = $scope.ngDialogData.url;
 };
 
-svWizard.controllers.GeneratedUrl.prototype.copy = function() {
-    //TODO copy url into clipboard
-};
-
 svWizard.controllers.GeneratedUrl.prototype.open = function() {
   this.window.open(this.url);
 };

@@ -4,7 +4,7 @@ var angular = angular || {};
 var svWizardApp = angular.module('svWizardApp');
 
 svWizardApp.service('RequestProvider', ['localStorageService',
-    function(localStorageService) {
+  function(localStorageService) {
     var REQUESTS = 'requests';
 
     var requests_ = {};
@@ -15,7 +15,7 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     this.createRequest = function(request) {
       if(request.name === undefined || request.name === null || 
         request.name.length === 0) {
-          throw 'Request must have a name';
+        throw 'Request must have a name';
       }
       
       if(this.getRequestWithName(request.name) !== null) {
@@ -33,7 +33,7 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     this.updateRequest = function(id, newReq) {
       if(newReq.name === undefined || newReq.name === null || 
         newReq.name.length === 0) {
-          throw 'Request must have a name';
+        throw 'Request must have a name';
       }
       var oldReq = requests_[id];
       
@@ -71,17 +71,14 @@ svWizardApp.service('RequestProvider', ['localStorageService',
     });
     
 
-    this.removeRequest = function(id) {
+    this.deleteRequest = function(id) {
       delete requests_[id];
       saveRequests_();
       updateArray_();
       return true;
     }
     
-    
-    
     //Private
-   
     
     /*Loads the requests from locastorage*/
     function init_() {
@@ -107,5 +104,5 @@ svWizardApp.service('RequestProvider', ['localStorageService',
       localStorageService.set(REQUESTS, requestsJson);
     }
     
-    }
+  }
 ]);

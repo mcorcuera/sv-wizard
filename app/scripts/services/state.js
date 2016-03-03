@@ -4,11 +4,10 @@ var angular = angular || {};
 var svWizardApp = angular.module('svWizardApp');
 
 svWizardApp.service('State', ['localStorageService', 'M',
-    function(localStorageService, M) {
+  function(localStorageService, M) {
     var CURRENT = 'current';
-
     var current_ = {};
-
+    
     init_();
 
     Object.defineProperty(this, 'current', {
@@ -32,7 +31,7 @@ svWizardApp.service('State', ['localStorageService', 'M',
      
     var defaultRequest_ = {
       timestamp: null,
-      name: 'La Giralda - Sevilla',
+      name: null,
       location: {lat: 37.3863, lng: -5.99205},
       size: {
         width: 640,
@@ -55,10 +54,9 @@ svWizardApp.service('State', ['localStorageService', 'M',
     }
 
     this.saveCurrentRequest = function(){
-      console.log('Current changed');
       var currentJson = angular.toJson(current_);
       localStorageService.set(CURRENT, currentJson);
     }
     
-    }
+  }
 ]);

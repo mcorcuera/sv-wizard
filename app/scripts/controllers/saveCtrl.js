@@ -4,20 +4,21 @@ svWizard.controllers = svWizard.controllers || {};
 svWizard.controllers.Save = function($scope, RequestProvider) {
   this.scope = $scope;
   this.requestProvider = RequestProvider;
-  this.request = $scope.ngDialogData.request;
+  this.request = angular.copy($scope.ngDialogData.request);
+  
 };
 
 svWizard.controllers.Save.prototype.saveRequest = function() {
   this.request = this.requestProvider.
     updateRequest(this.request.id, this.request);
   
-  this.scope.closeThisDialog();
+  this.scope.confirm(this.request);
 };
 
 
 svWizard.controllers.Save.prototype.saveRequestAs = function() {
-  this.requestProvider.createRequest(this.request);
-  this.scope.closeThisDialog();
+  this.request = this.requestProvider.createRequest(this.request);
+  this.scope.confirm(this.request);
 };
 
 angular.module('svWizardApp').controller( 'SaveCtrl',['$scope', 

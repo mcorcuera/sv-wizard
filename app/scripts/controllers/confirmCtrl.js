@@ -1,4 +1,5 @@
 var svWizard = svWizard || {};
+
 svWizard.controllers = svWizard.controllers || {};
 
 svWizard.controllers.Confirm = function($scope) {
@@ -9,7 +10,6 @@ svWizard.controllers.Confirm = function($scope) {
 svWizard.controllers.Confirm.prototype.accept = function() {
   this.scope.confirm();
 };
-
 
 svWizard.controllers.Confirm.prototype.cancel = function() {
   this.scope.closeThisDialog();
