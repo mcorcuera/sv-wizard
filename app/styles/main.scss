@@ -43,6 +43,7 @@ paper-header-panel{
 /* Main style */
 .sv-parameters {
   min-width: 400px;
+  width: 400px;
   paper-toolbar {
       paper-button[disabled] {
       color: #ccc !important;
@@ -57,6 +58,7 @@ paper-header-panel{
       margin-top: 10px;
       border: 1px solid #db4437;
       width: 100%;
+      max-width:100%;
       background: none;
       text-align: center;
       display: block;
